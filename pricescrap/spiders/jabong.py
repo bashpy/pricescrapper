@@ -10,12 +10,14 @@ class Jabong(BaseSpider):
     """Spider for regularly updated livingsocial.com site, San Francisco Page"""
     name = "jabong"
     allowed_domains = ["flipkart.com"]
-    start_urls = ["http://www.flipkart.com/prestige-popular-5-l-pressure-cooker/p/itmdvjqqbf9ybfue?pid=PRCDVFAFTHGY2AGA&srno=b_1&ref=e7068d06-4a19-4044-b520-2e4baf20bc90"]
+    start_urls = ["http://www.flipkart.com/household/pressure-cookers-pans/prestige~brand/pr?sid=r4l,u3r&otracker=product_breadCrumbs_Prestige%20Pressure%20Cookers%20%26%20Pans#jumpTo=0|15"]
     def parse(self, response):
         HtmlXPathSelector(response)
         hxs = HtmlXPathSelector(response)
-        title = response.xpath('//title/text()').extract()
-        price = response.xpath('.//span[@class="selling-price omniture-field"]/text()').extract()
+        products = hxs.select("//div[@class='pu-rating']")
+        print products
+        title = products.xpath('//title/text()').extract()
+        price = products.xpath('.//div[@class="pu-final"]/text()').extract()
         print title,price
 
 
