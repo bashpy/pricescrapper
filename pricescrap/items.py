@@ -13,3 +13,12 @@ class PricescrapItem(scrapy.Item):
     link = scrapy.Field()
     desc = scrapy.Field()
     price = scrapy.Field()
+
+class Jabong(scrapy.Item):
+    """Livingsocial container (dictionary-like object) for scraped data"""
+    title = scrapy.Field()
+    link = scrapy.Field()
+    location = scrapy.Field()
+    original_price = scrapy.Field()
+    price = scrapy.Field()
+    end_date = scrapy.Field()
