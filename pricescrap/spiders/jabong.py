@@ -14,11 +14,12 @@ class Jabong(BaseSpider):
     def parse(self, response):
         HtmlXPathSelector(response)
         hxs = HtmlXPathSelector(response)
-        products = hxs.select("//div[@class='pu-rating']")
+        products = hxs.select("//div[@id='products']")
         print products
-        title = products.xpath('//title/text()').extract()
-        price = products.xpath('.//div[@class="pu-final"]/text()').extract()
-        print title,price
+        for l in products:
+            title = l.xpath('//title/text()').extract()
+            price = l.xpath('.//span[@class="fk-bold"]/text()').extract()
+            print title,price
 
 
 
