@@ -1,14 +1,33 @@
-import scrapy
+__author__ = 'jovin'
 
-class flipkart(scrapy.Spider):
-    name = "flipkart"
+from scrapy.spider import BaseSpider
+from scrapy.selector import HtmlXPathSelector
+from pricescrap.items import Jabong_i
+import MySQLdb
+from pricescrap.items import Jabong_i
+
+class Jabong(BaseSpider):
+    name = "jabong"
     allowed_domains = ["flipkart.com"]
-    start_urls = [
-        "http://www.flipkart.com/mens-clothing/t-shirts/pr?p[]=facets.type%255B%255D%3DV-neck&p[]=sort%3Dpopularity&sid=2oq%2Cs9b%2Cj9y&facetOrder[]=type&otracker=clp_mens-clothing-t-shirts_CategoryLinksModule_0-2_catergorylinks_3_VNeck" ]
-
+    start_urls = ["http://www.flipkart.com/household/cookware/pots-pans/prestige~brand/pr?sid=r4l%2Cc7t%2Cqov&ref=f143ef7a-e313-461a-aea3-cd120ee9bc60"]
     def parse(self, response):
-        for sel in response.xpath('//ul/li'):
-            title = sel.xpath('a/text()').extract()
-            link = sel.xpath('a/@href').extract()
-            desc = sel.xpath('text()').extract()
-            print title, link, desc
+        self.conn = MySQLdb.connect(user='root', passwd='2361250', db='test', host='localhost', charset="utf8", use_unicode=True)
+        self.cursor = self.conn.cursor()
+        i = 0
+        price_list = []
+        title_list = []
+        HtmlXPathSelector(response)
+        hxs = HtmlXPathSelector(response)
+        titles = hxs.select("//a[@class='fk-display-block']/text()").extract()
+        products = hxs.select("//div[@id='products']")
+        for l in products:
+            item = Jabong_i()
+            items = []
+            items = l.xpath('.//span[@class="fk-font-17 fk-bold"]/text()').extract()
+        for j in titles:
+
+            self.cursor.execute("""INSERT INTO data (title,price) VALUES (%s,%s)""", (j,items[i]))
+            self.conn.commit()
+            i = i+1
+
+
