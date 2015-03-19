@@ -22,4 +22,19 @@ class Jabong(BaseSpider):
             text = l2[i]+l1[i]
             arr.append(text)
             i = i+1
-        print len(price)
+        i = 0
+        arrnw=[]
+        for l in arr:
+            arrnw.append(",".join(l))
+        arlate=[]
+        for l in arrnw:
+
+            l= l.replace (",", " ")
+
+            arlate.append(l)
+        i = 0
+        for j in price:
+            self.cursor.execute("""INSERT INTO data (title,price) VALUES (%s,%s)""", (arlate[i],j))
+            self.conn.commit()
+            i = i+1
+        # print arlate
