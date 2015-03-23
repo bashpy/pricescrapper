@@ -14,7 +14,7 @@ class PricescrapItem(scrapy.Item):
     desc = scrapy.Field()
     price = scrapy.Field()
 
-class Jabong(scrapy.Item):
+class Jabong_i(scrapy.Item):
     """Livingsocial container (dictionary-like object) for scraped data"""
     title = scrapy.Field()
     link = scrapy.Field()
@@ -22,3 +22,8 @@ class Jabong(scrapy.Item):
     original_price = scrapy.Field()
     price = scrapy.Field()
     end_date = scrapy.Field()
+
+class AljazeeraItem(scrapy.Item):
+    headline = scrapy.Field()
+    content = scrapy.Field()
+    date = scrapy.Field()

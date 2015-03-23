@@ -15,3 +15,8 @@ NEWSPIDER_MODULE = 'pricescrap.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'pricescrap (+http://www.yourdomain.com)'
+
+ITEM_PIPELINES = {
+    'pricescrap.pipelines.SQLStore': 300,
+    'pricescrap.pipelines.JsonWriterPipeline':400,
+}

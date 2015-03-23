@@ -6,8 +6,8 @@ from pricescrap.items import Jabong_i
 import MySQLdb
 from pricescrap.items import Jabong_i
 
-class Jabong(BaseSpider):
-    name = "jabong"
+class Flipkart(BaseSpider):
+    name = "flipkart"
     allowed_domains = ["flipkart.com"]
     start_urls = ["http://www.flipkart.com/household/cookware/pots-pans/prestige~brand/pr?sid=r4l%2Cc7t%2Cqov&ref=f143ef7a-e313-461a-aea3-cd120ee9bc60"]
     def parse(self, response):

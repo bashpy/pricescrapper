@@ -42,4 +42,4 @@ class Jabong(BaseSpider):
             self.cursor.execute("""INSERT INTO data (title,price,link) VALUES (%s,%s,%s)""", (arlate[i],j,new_links[i]))
             self.conn.commit()
             i = i+1
-        print links
+        #print links
