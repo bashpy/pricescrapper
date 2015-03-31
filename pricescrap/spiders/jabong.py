@@ -11,6 +11,7 @@ class Jabong(BaseSpider):
         self.cursor = self.conn.cursor()
         hxs = HtmlXPathSelector(response)
         links = hxs.select("//@data-url").extract()
+        image = hxs.select("//img[@class='itm-img']//@src").extract()
         content = hxs.select("//div[@class='box box-bgcolor']")
         price = content.select("//strong[@class='fs16 qa-price']/text()").extract()
         title = content.select(".//span[@class='qa-brandName title mt30 c999 prod-ellipsis']/text()").extract()
@@ -39,7 +40,6 @@ class Jabong(BaseSpider):
             arlate.append(l)
         i = 0
         for j in price:
-            self.cursor.execute("""INSERT INTO data (title,price,link) VALUES (%s,%s,%s)""", (arlate[i],j,new_links[i]))
-            self.conn.commit()
+
             i = i+1
-        #print links
+        print image
