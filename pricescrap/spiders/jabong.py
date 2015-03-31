@@ -20,6 +20,7 @@ class Jabong(BaseSpider):
         l2 = [elem.strip().split(' ') for elem in title]
         arr = []
         new_links=[]
+
         i = 0
         for l in links:
             l = "www.jabong.com/"+l
@@ -38,8 +39,13 @@ class Jabong(BaseSpider):
             l= l.replace (",", " ")
 
             arlate.append(l)
+        formatted_images = [l.encode("utf-8") for l in image]
+        formatted_title = [l.encode("utf-8") for l in arlate]
+        formatted_price = [l.encode("utf-8") for l in price]
+        formatted_links = [l.encode("utf-8") for l in new_links]
         i = 0
-        for j in price:
-
+        for j in formatted_price:
+            self.cursor.execute("""INSERT INTO data (title,price,link,image) VALUES (%s,%s,%s,%s)""", (formatted_title[i]
+            ,j,formatted_links[i],formatted_images[i]))
+            self.conn.commit()
             i = i+1
-        print image
