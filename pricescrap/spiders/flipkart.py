@@ -9,7 +9,7 @@ from pricescrap.items import Jabong_i
 class Flipkart(BaseSpider):
     name = "flipkart"
     allowed_domains = ["flipkart.com"]
-    start_urls = ["http://www.flipkart.com/household/cookware/pots-pans/prestige~brand/pr?sid=r4l%2Cc7t%2Cqov&ref=f143ef7a-e313-461a-aea3-cd120ee9bc60"]
+    start_urls = ["http://www.flipkart.com/search?q=moto+g+2nd+gen&as=on&as-show=on&otracker=start&as-pos=1_q_moto+g"]
     def parse(self, response):
         self.conn = MySQLdb.connect(user='root', passwd='2361250', db='test', host='localhost', charset="utf8", use_unicode=True)
         self.cursor = self.conn.cursor()
@@ -19,15 +19,24 @@ class Flipkart(BaseSpider):
         HtmlXPathSelector(response)
         hxs = HtmlXPathSelector(response)
         titles = hxs.select("//a[@class='fk-display-block']/text()").extract()
-        products = hxs.select("//div[@id='products']")
-        for l in products:
-            item = Jabong_i()
-            items = []
-            items = l.xpath('.//span[@class="fk-font-17 fk-bold"]/text()').extract()
-        for j in titles:
-
-            self.cursor.execute("""INSERT INTO data (title,price) VALUES (%s,%s)""", (j,items[i]))
-            self.conn.commit()
-            i = i+1
-
-
+        items = hxs.xpath('//span[@class="fk-font-17 fk-bold"]/text()').extract()
+        links = hxs.select("//a[@class='fk-display-block']/@href").extract()
+        text = hxs.xpath("//ul[@class='pu-usp']//span[@class='text']/text()").extract()
+        text_list = [x.encode("utf-8") for x in text]
+        text_list = [text_list[x:x+4] for x in range(0, len(text_list),4)]
+        images_first =  hxs.xpath("//div[@class='pu-visual-section']/a/img/@src").extract()
+        images = hxs.xpath("//div[@class='pu-visual-section']/a/img/@data-src").extract()
+        images_first = images_first[0:4]
+        images =images_first + images
+        links = [x.encode('utf-8') for x in links]
+        links = ["http://www.flipkart.com"+x for x in links]
+        price_list = [ x.encode('utf-8') for x in items]
+        title_list = [x.encode('utf-8') for x in titles]
+        title_list = [x.strip() for x in title_list]
+        i = 0
+        # for j in price_list:
+        #     self.cursor.execute("""INSERT INTO data (title,price,link,image) VALUES (%s,%s,%s,%s)""", (title_list[i]
+        #     ,j,links[i],images[i]))
+        #     self.conn.commit()
+        #     i = i+1
+        print images

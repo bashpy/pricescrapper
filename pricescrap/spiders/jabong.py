@@ -5,7 +5,7 @@ import MySQLdb
 class Jabong(BaseSpider):
     name = "jabong"
     allowed_domains = "jabong.com"
-    start_urls = ["http://www.jabong.com/men/shoes/"]
+    start_urls = [""]
     def parse(self,response):
         self.conn = MySQLdb.connect(user='root', passwd='2361250', db='test', host='localhost', charset="utf8", use_unicode=True)
         self.cursor = self.conn.cursor()
@@ -23,7 +23,7 @@ class Jabong(BaseSpider):
 
         i = 0
         for l in links:
-            l = "www.jabong.com/"+l
+            l = "http://www.jabong.com/"+l
             new_links.append(l)
         for l in range(len(l2)):
             text = l2[i]+l1[i]
