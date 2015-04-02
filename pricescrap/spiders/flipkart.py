@@ -9,7 +9,7 @@ from pricescrap.items import Jabong_i
 class Flipkart(BaseSpider):
     name = "flipkart"
     allowed_domains = ["flipkart.com"]
-    start_urls = ["http://www.flipkart.com/search?q=moto+g+2nd+gen&as=on&as-show=on&otracker=start&as-pos=1_q_moto+g"]
+    start_urls = ["http://www.flipkart.com/mobiles/pr?p[]=facets.brand%255B%255D%3DMicromax&p[]=facets.operating_system%255B%255D%3DAndroid&sid=tyy%2C4io&ref=8b8a2b4f-53da-487a-9e9a-eb0fd55450cb"]
     def parse(self, response):
         self.conn = MySQLdb.connect(user='root', passwd='2361250', db='test', host='localhost', charset="utf8", use_unicode=True)
         self.cursor = self.conn.cursor()
@@ -34,9 +34,9 @@ class Flipkart(BaseSpider):
         title_list = [x.encode('utf-8') for x in titles]
         title_list = [x.strip() for x in title_list]
         i = 0
-        # for j in price_list:
-        #     self.cursor.execute("""INSERT INTO data (title,price,link,image) VALUES (%s,%s,%s,%s)""", (title_list[i]
-        #     ,j,links[i],images[i]))
-        #     self.conn.commit()
-        #     i = i+1
+        for j in price_list:
+            self.cursor.execute("""INSERT INTO Flipkart (title,price,link,image) VALUES (%s,%s,%s,%s)""", (title_list[i]
+            ,j,links[i],images[i]))
+            self.conn.commit()
+            i = i+1
         print images
