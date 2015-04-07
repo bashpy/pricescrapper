@@ -17,9 +17,12 @@ class Snapdeal(BaseSpider):
 
 
     def __init__(self):
-        self.driver = webdriver.Firefox()
+        firefox_profile = webdriver.FirefoxProfile()
+        firefox_profile.set_preference('permissions.default.image', 2)
+        self.driver = webdriver.Firefox(firefox_profile=firefox_profile)
     def parse(self, response):
         self.driver.get(response.url)
+
         copyright = self.driver.find_element_by_id('seeMoreProducts')
         for i in range(1,2):
             ActionChains(self.driver).move_to_element(copyright).perform()
