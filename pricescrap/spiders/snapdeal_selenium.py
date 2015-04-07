@@ -21,7 +21,7 @@ class Snapdeal(BaseSpider):
     def parse(self, response):
         self.driver.get(response.url)
         copyright = self.driver.find_element_by_id('seeMoreProducts')
-        for i in  range(1,2):
+        for i in range(1,2):
             ActionChains(self.driver).move_to_element(copyright).perform()
             time.sleep(15)
         # delay = 3 # seconds
@@ -43,9 +43,9 @@ class Snapdeal(BaseSpider):
         #     ActionChains(self.driver).move_to_element(copyright).perform()
 
         response = TextResponse(url=response.url, body=self.driver.page_source, encoding='utf-8')
-        links = response.xpath("//var[contains(@id,'selling-price-id-')]/text()").extract()
-        price = response.xpath("//div[@class='product_list_view_heading']/text()").extract()
-        title = response.xpath("//div[@class='lfloat product_list_view_info_cont']//a[@class='hit-ss-logger']/@href").extract()
+        price = response.xpath("//var[contains(@id,'selling-price-id-')]/text()").extract()
+        title = response.xpath("//div[@class='product_list_view_heading']/text()").extract()
+        links = response.xpath("//div[@class='lfloat product_list_view_info_cont']//a[@class='hit-ss-logger']/@href").extract()
 
 
         # links = self.driver.find_elements_by_class_name('productWrapper')
